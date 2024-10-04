@@ -38,7 +38,6 @@ exports.Login = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ message: 'All fields are required' });
     }
-
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: 'User is not registered' });
@@ -48,7 +47,7 @@ exports.Login = async (req, res) => {
     if (!validPassword) {
       return res.status(400).json({ message: 'Password is incorrect' });
     }
-
+    
     const token = jwt.sign(
       { username: user.username, userId: user._id },
       process.env.JWT_SECRET,
@@ -76,7 +75,9 @@ exports.Login = async (req, res) => {
       sameSite: 'Strict',
     });
 
-    res.json({ message: 'Login successful' });
+    res.json({ message: 'Login successful',
+                userId: user._id
+     });
   } catch (error) {
     console.error('Login failed:', error);
     return res.status(500).json({ message: 'Error logging in' });

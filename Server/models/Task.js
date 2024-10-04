@@ -5,7 +5,7 @@ const TaskSchema = new mongoose.Schema({
     description: { type: String },
     duedate: { type: Date },
     status: { type: String },
-    userId: {type: mongoose.Schema.Types.ObjectId, ref: "User", required:true}
+    userId: {type: mongoose.Schema.Types.ObjectId, ref: "User"}
   }); 
 
   const Task = mongoose.model('Tasks', TaskSchema);
