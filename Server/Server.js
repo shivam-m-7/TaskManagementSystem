@@ -3,6 +3,9 @@ const express = require('express');
 const parseCookie = require("cookie-parser");
 const mongoose = require('mongoose');
 const cors = require('cors');
+const authRouter = require("./routes/auth")
+const taskRouter = require("./routes/task")
+const { Auth } = require('./middleware/Auth');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +20,10 @@ app.use(
     credentials: true,
   })
 );
+
+app.use('/auth', authRouter);
+app.use('/task', Auth, taskRouter);
+
 
 mongoose
   .connect(MONGO_DB)
